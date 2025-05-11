@@ -1,103 +1,142 @@
-import Image from "next/image";
+"use client";
+
+// import Skills from "@/components/skills";
+import { motion, useScroll, useTransform } from "motion/react";
+
+import Header from "@/components/Header";
+import Contact from "@/components/Contact";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { scrollYProgress } = useScroll();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Animation ranges
+  const headerRange = [0, 0.4];
+  const skillsRange = [0.4, 0.8];
+  const endRange = [0.8, 1];
+
+  // Header effects
+  const headerY = useTransform(
+    scrollYProgress,
+    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
+    ["0%", "0%", "-30%", "-30%"]
+  );
+  const headerOpacity = useTransform(
+    scrollYProgress,
+    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
+    [1, 1, 0, 0]
+  );
+  const headerScale = useTransform(
+    scrollYProgress,
+    [headerRange[0], headerRange[1]],
+    [1, 1.05]
+  );
+  const headerRotate = useTransform(
+    scrollYProgress,
+    [headerRange[0], headerRange[1]],
+    [0, -2]
+  );
+
+  // Skills effects
+  const skillsY = useTransform(
+    scrollYProgress,
+    [
+      headerRange[0],
+      headerRange[1],
+      skillsRange[0],
+      skillsRange[1],
+      endRange[0],
+      endRange[1],
+    ],
+    ["30%", "30%", "0%", "0%", "-20%", "-20%"]
+  );
+  const skillsOpacity = useTransform(
+    scrollYProgress,
+    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
+    [0, 0, 1, 1]
+  );
+  const skillsScale = useTransform(
+    scrollYProgress,
+    [skillsRange[0], skillsRange[1]],
+    [0.95, 1]
+  );
+  const skillsBlur = useTransform(
+    scrollYProgress,
+    [
+      skillsRange[0] - 0.1,
+      skillsRange[0],
+      skillsRange[1],
+      skillsRange[1] + 0.1,
+    ],
+    [10, 0, 0, 10]
+  );
+
+  // Background effects
+  const bgColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    ["#f6ccde", "#f6ccde", "#f6ccde"]
+  );
+  const bgStarsOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.2, 1, 1, 0.2]
+  );
+
+  return (
+    <motion.main className="relative" style={{ backgroundColor: bgColor }}>
+      {/* Animated background elements */}
+      <motion.div
+        className="fixed inset-0 pointer-events-none"
+        style={{ opacity: bgStarsOpacity }}
+      >
+        {/* Starry background or other decorative elements */}
+        <div className="absolute inset-0 bg-[url('/stars.svg')] opacity-30" />
+      </motion.div>
+
+      {/* Scrollable content container */}
+      <div className="h-[300vh] relative">
+        {/* Sticky viewport container */}
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          {/* Header section */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+            style={{
+              y: headerY,
+              opacity: headerOpacity,
+              scale: headerScale,
+              rotate: headerRotate,
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <Header />
+          </motion.div>
+
+          {/* Skills section */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+            style={{
+              y: skillsY,
+              opacity: skillsOpacity,
+              scale: skillsScale,
+              filter: `blur(${skillsBlur}px)`,
+            }}
           >
-            Read our docs
-          </a>
+            <Contact />
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* Scroll progress indicator */}
+      <motion.div
+        className="fixed bottom-4 left-4 h-1 bg-white rounded-full"
+        style={{
+          width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]),
+          opacity: useTransform(
+            scrollYProgress,
+            [0, 0.1, 0.9, 1],
+            [0, 1, 1, 0]
+          ),
+        }}
+      />
+    </motion.main>
   );
 }
