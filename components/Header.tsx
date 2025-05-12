@@ -98,9 +98,9 @@ export default function Header() {
     "R",
   ];
 
-  const time = useTime();
+  // const time = useTime();
   // const rotate = useTransform(time, [0, 2000], [0, 1], { clamp: false });
-  const { scrollYProgress } = useScroll();
+  // const { scrollYProgress } = useScroll();
   // const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const description =
     "Welcome to my portfolio! I'm Ansh Garg, a senior-year B.Tech student in Electronics and Instrumentation with a Computer Science minor at Nirma University. Driven by curiosity and creativity, I aspire to be a software engineer who transforms complex challenges into innovative, real-world tech solutions.";
