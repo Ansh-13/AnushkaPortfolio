@@ -1,5 +1,4 @@
-import { animate } from "framer-motion";
-import { motion, useMotionValue } from "framer-motion";
+import { animate, motion, useMotionValue, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -8,14 +7,19 @@ interface Props {
 }
 
 export default function CursorText({ letters, className = "" }: Props) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(containerRef, { once: true });
+
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [visibleCount, setVisibleCount] = useState(0);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Animate letters one by one
+  // Animate letters one by one after in view
   useEffect(() => {
+    if (!isInView) return;
+
     const interval = setInterval(() => {
       setVisibleCount((prev) => {
         if (prev < letters.length) return prev + 1;
@@ -25,7 +29,7 @@ export default function CursorText({ letters, className = "" }: Props) {
     }, 500);
 
     return () => clearInterval(interval);
-  }, [letters.length]);
+  }, [isInView, letters.length]);
 
   // Move cursor to last visible letter
   useEffect(() => {
@@ -50,7 +54,7 @@ export default function CursorText({ letters, className = "" }: Props) {
   }, [visibleCount, x, y]);
 
   return (
-    <div className={`text-center ${className}`}>
+    <div ref={containerRef} className={`text-center ${className}`}>
       <div className="inline-flex items-center justify-center relative">
         {letters.map((letter, i) => (
           <motion.span
@@ -67,7 +71,7 @@ export default function CursorText({ letters, className = "" }: Props) {
           </motion.span>
         ))}
 
-        {/* Uncomment if you want the blinking cursor */}
+        {/* Optional blinking cursor */}
         {/* <motion.span
           className="absolute w-1 h-[1.5em] bg-pink-600"
           style={{ x, y }}

@@ -1,110 +1,104 @@
 "use client";
-
-// import Skills from "@/components/skills";
-import { motion, useScroll, useTransform } from "motion/react";
-
 import Header from "@/components/Header";
+import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
 
-  // Animation ranges
-  const headerRange = [0, 0.4];
-  const skillsRange = [0.4, 0.8];
-  const endRange = [0.8, 1];
+  // Define animation ranges for 4 sections
+  const sectionCount = 4;
+  const sectionSize = 1 / sectionCount;
+  const introRange = [0, sectionSize];
+  const skillsRange = [sectionSize, 2 * sectionSize];
+  const projectsRange = [2 * sectionSize, 3 * sectionSize];
+  const contactRange = [3 * sectionSize, 1];
 
-  // Header effects
-  const headerY = useTransform(
+  // Intro section effects
+  const introY = useTransform(
     scrollYProgress,
-    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
-    ["0%", "0%", "-30%", "-30%"]
+    [introRange[0], introRange[1], skillsRange[0]],
+    ["0%", "-20%", "-100%"]
   );
-  const headerOpacity = useTransform(
+  const introOpacity = useTransform(
     scrollYProgress,
-    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
-    [1, 1, 0, 0]
-  );
-  const headerScale = useTransform(
-    scrollYProgress,
-    [headerRange[0], headerRange[1]],
-    [1, 1.05]
-  );
-  const headerRotate = useTransform(
-    scrollYProgress,
-    [headerRange[0], headerRange[1]],
-    [0, -2]
+    [introRange[0], introRange[1], skillsRange[0]],
+    [1, 1, 0]
   );
 
-  // Skills effects
+  // Skills section effects
   const skillsY = useTransform(
     scrollYProgress,
-    [
-      headerRange[0],
-      headerRange[1],
-      skillsRange[0],
-      skillsRange[1],
-      endRange[0],
-      endRange[1],
-    ],
-    ["30%", "30%", "0%", "0%", "-20%", "-20%"]
+    [introRange[1], skillsRange[0], skillsRange[1], projectsRange[0]],
+    ["100%", "0%", "0%", "-100%"]
   );
   const skillsOpacity = useTransform(
     scrollYProgress,
-    [headerRange[0], headerRange[1], skillsRange[0], skillsRange[1]],
-    [0, 0, 1, 1]
+    [introRange[1], skillsRange[0], skillsRange[1], projectsRange[0]],
+    [0, 1, 1, 0]
   );
-  const skillsScale = useTransform(
+
+  // Projects section effects
+  const projectsY = useTransform(
     scrollYProgress,
-    [skillsRange[0], skillsRange[1]],
-    [0.95, 1]
+    [skillsRange[1], projectsRange[0], projectsRange[1], contactRange[0]],
+    ["100%", "0%", "0%", "-100%"]
   );
-  const skillsBlur = useTransform(
+  const projectsOpacity = useTransform(
     scrollYProgress,
-    [
-      skillsRange[0] - 0.1,
-      skillsRange[0],
-      skillsRange[1],
-      skillsRange[1] + 0.1,
-    ],
-    [10, 0, 0, 10]
+    [skillsRange[1], projectsRange[0], projectsRange[1], contactRange[0]],
+    [0, 1, 1, 0]
+  );
+
+  // Contact section effects
+  const contactY = useTransform(
+    scrollYProgress,
+    [projectsRange[1], contactRange[0], contactRange[1]],
+    ["100%", "0%", "-20%"]
+  );
+  const contactOpacity = useTransform(
+    scrollYProgress,
+    [projectsRange[1], contactRange[0], contactRange[1]],
+    [0, 1, 1]
   );
 
   // Background effects
   const bgColor = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    ["#f6ccde", "#f6ccde", "#f6ccde"]
-  );
-  const bgStarsOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0.2, 1, 1, 0.2]
+    [0, 0.33, 0.66, 1],
+    ["#f6ccde", "#f6ccde", "#f6ccde", "#f6ccde"]
   );
 
   return (
     <motion.main className="relative" style={{ backgroundColor: bgColor }}>
-      {/* Animated background elements */}
-      <motion.div
-        className="fixed inset-0 pointer-events-none"
-        style={{ opacity: bgStarsOpacity }}
+      {/* <motion.div
+        className="absolute z-10 text-pink-500 text-lg sm:text-l md:text-2xl lg:text-3xl font-extrabold m-4 sm:m-6 md:m-8 font-serif flex justify-center items-center gap-2"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.2 }}
       >
-        {/* Starry background or other decorative elements */}
-        <div className="absolute inset-0 bg-[url('/stars.svg')] opacity-30" />
-      </motion.div>
+        <div className="flex items-center gap-2">
+          <Circle />
+          <motion.span whileHover={{ textDecoration: "underline" }}>
+            Circle
+          </motion.span>
+        </div>
+      </motion.div> */}
 
       {/* Scrollable content container */}
-      <div className="h-[300vh] relative">
+      <div className="h-[400vh] relative">
         {/* Sticky viewport container */}
         <div className="sticky top-0 h-screen w-full overflow-hidden">
-          {/* Header section */}
+          {/* Intro section */}
           <motion.div
-            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              y: headerY,
-              opacity: headerOpacity,
-              scale: headerScale,
-              rotate: headerRotate,
+              y: introY,
+              opacity: introOpacity,
+              zIndex: useTransform(scrollYProgress, (val) =>
+                val < skillsRange[0] ? 40 : 10
+              ),
             }}
           >
             <Header />
@@ -112,12 +106,41 @@ export default function Home() {
 
           {/* Skills section */}
           <motion.div
-            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
               y: skillsY,
               opacity: skillsOpacity,
-              scale: skillsScale,
-              filter: `blur(${skillsBlur}px)`,
+              zIndex: useTransform(scrollYProgress, (val) =>
+                val >= skillsRange[0] && val < projectsRange[0] ? 40 : 30
+              ),
+            }}
+          >
+            <Projects />
+          </motion.div>
+
+          {/* Projects section */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              y: projectsY,
+              opacity: projectsOpacity,
+              zIndex: useTransform(scrollYProgress, (val) =>
+                val >= projectsRange[0] && val < contactRange[0] ? 40 : 20
+              ),
+            }}
+          >
+            <Projects />
+          </motion.div>
+
+          {/* Contact section */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              y: contactY,
+              opacity: contactOpacity,
+              zIndex: useTransform(scrollYProgress, (val) =>
+                val >= contactRange[0] ? 40 : 10
+              ),
             }}
           >
             <Contact />
@@ -125,16 +148,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Scroll progress indicator */}
+      {/* Scroll progress indicator (optional) */}
       <motion.div
-        className="fixed bottom-4 left-4 h-1 bg-white rounded-full"
+        className="fixed bottom-4 left-4 h-1 bg-white rounded-full z-50"
         style={{
           width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]),
-          opacity: useTransform(
-            scrollYProgress,
-            [0, 0.1, 0.9, 1],
-            [0, 1, 1, 0]
-          ),
         }}
       />
     </motion.main>

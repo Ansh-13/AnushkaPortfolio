@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import CursorText from "./cursor";
 
 export default function Contact() {
   const contactUsLetters = "ContactUs".split("");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+
   const [senderEmail, setSenderEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
@@ -42,24 +45,22 @@ export default function Contact() {
   };
 
   return (
-    <motion.div
-      className="w-screen h-screen flex flex-col items-center justify-center gap-8 p-6 sm:p-8 bg-gradient-to-b from-[#f6ccde] gap-2 to-purple-100 text-black relative overflow-x-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+    <div
+      ref={ref}
+      className="w-screen min-h-screen flex flex-col items-center justify-center gap-8 p-6 sm:p-8 bg-gradient-to-b from-[#f6ccde] to-purple-100 text-black relative overflow-x-hidden"
     >
       <motion.div
         className="w-full max-w-2xl"
-        initial={{ y: 20 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.2 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
       >
         <div className="mb-12 text-center">
           <CursorText letters={contactUsLetters} />
           <motion.p
             className="mt-4 text-black text-lg"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.4 }}
           >
             Get in touch with me
@@ -69,7 +70,7 @@ export default function Contact() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <motion.div
             initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.6 }}
           >
             <label className="block text-sm font-medium text-black mb-2">
@@ -87,7 +88,7 @@ export default function Contact() {
 
           <motion.div
             initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.8 }}
           >
             <label className="block text-sm font-medium text-black mb-2">
@@ -105,7 +106,7 @@ export default function Contact() {
 
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 1 }}
             className="pt-2"
           >
@@ -166,7 +167,7 @@ export default function Contact() {
         <motion.div
           className="mt-12 text-center text-gray-500 text-sm"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1.2 }}
         >
           <p>
@@ -175,6 +176,6 @@ export default function Contact() {
           </p>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
