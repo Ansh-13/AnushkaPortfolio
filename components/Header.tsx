@@ -47,7 +47,7 @@ export default function Header() {
     };
   }, []);
 
-  const handleMouseMove_right = (e: any) => {
+  const handleMouseMove_right = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef_right.current) return;
     const rect = cardRef_right.current.getBoundingClientRect();
     const posX = (e.clientX - rect.left) / rect.width;
@@ -57,7 +57,7 @@ export default function Header() {
     yRight.set(posY);
   };
 
-  const handleMouseMove = (e: any) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef_left.current) return;
     const rect = cardRef_left.current.getBoundingClientRect();
     const posX = (e.clientX - rect.left) / rect.width;
@@ -99,9 +99,9 @@ export default function Header() {
   ];
 
   const time = useTime();
-  const rotate = useTransform(time, [0, 2000], [0, 1], { clamp: false });
+  // const rotate = useTransform(time, [0, 2000], [0, 1], { clamp: false });
   const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  // const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const description =
     "Welcome to my portfolio! I'm Ansh Garg, a senior-year B.Tech student in Electronics and Instrumentation with a Computer Science minor at Nirma University. Driven by curiosity and creativity, I aspire to be a software engineer who transforms complex challenges into innovative, real-world tech solutions.";
   return (
