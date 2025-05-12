@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useTime,
-  useTransform,
-  useScroll,
-  useMotionValue,
-} from "motion/react";
+import { motion, useTransform, useMotionValue } from "motion/react";
 
 import Image from "next/image";
 import { useRef } from "react";
