@@ -56,7 +56,7 @@ export default function Contact() {
         transition={{ duration: 0.8 }}
       >
         <div className="mb-12 text-center">
-          <CursorText letters={contactUsLetters} />
+          <CursorText letters={contactUsLetters} ref={ref} />
           <motion.p
             className="mt-4 text-black text-lg"
             initial={{ opacity: 0 }}
@@ -172,7 +172,7 @@ export default function Contact() {
         >
           <p>
             Or reach out directly at:{" "}
-            <span className="text-[#df94b4]">anshgarg7234@gmail.com</span>
+            <span className="text-[#df94b4]">anushkachittora464@gmail.com</span>
           </p>
         </motion.div>
       </motion.div>

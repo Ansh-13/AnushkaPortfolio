@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useTransform, useMotionValue } from "motion/react";
+import {
+  motion,
+  useTransform,
+  useMotionValue,
+  useInView,
+  useScroll,
+} from "motion/react";
 
 import Image from "next/image";
 import { useRef } from "react";
@@ -11,6 +17,8 @@ import { useState, useEffect } from "react";
 import { Linkedin, Github } from "lucide-react";
 
 export default function Header() {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const cardRef_right = useRef<HTMLDivElement | null>(null);
   const cardRef_left = useRef<HTMLDivElement | null>(null);
 
@@ -97,12 +105,12 @@ export default function Header() {
   // const { scrollYProgress } = useScroll();
   // const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const description =
-    "Welcome to my portfolio! I'm Ansh Garg, a senior-year B.Tech student in Electronics and Instrumentation with a Computer Science minor at Nirma University. Driven by curiosity and creativity, I aspire to be a software engineer who transforms complex challenges into innovative, real-world tech solutions.";
+    "Welcome to my portfolio! I'm Anushka Chittora, a senior-year B.Tech student in Electronics and Instrumentation with a Computer Science minor at Nirma University. Driven by curiosity and creativity, I aspire to be a software engineer who transforms complex challenges into innovative, real-world tech solutions.";
   return (
     <>
       {!isMobile && (
         <motion.div
-          className="flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-[oklch(0.8_0.0495_332.05)] to-purple-100"
+          className="flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-[#f6ccde] to-purple-100"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -133,7 +141,8 @@ export default function Header() {
               />
 
               {/* Animated Heading */}
-              <CursorText letters={heading} />
+
+              <CursorText letters={heading} ref={ref} />
 
               {/* Description */}
               <motion.p
@@ -239,7 +248,7 @@ export default function Header() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <CursorText letters={heading} />
+          <CursorText letters={heading} ref={ref} />
 
           <motion.p
             initial={{ opacity: 0 }}
