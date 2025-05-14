@@ -1,4 +1,4 @@
-import { motion, useAnimation, useTime, useTransform } from "framer-motion";
+import { motion, useAnimation, useScroll } from "framer-motion";
 // import CursorText from "./cursor";
 import { useState, useEffect, useRef } from "react";
 
@@ -58,6 +58,16 @@ export default function Skills() {
       });
     }
   }, [controls]);
+
+  const target = useRef(null);
+  const container = useRef(null);
+
+  const { scrollXProgress } = useScroll({
+    container: container,
+    target: target,
+    axis: "x",
+    offset: ["end start", "end end"],
+  });
 
   return (
     <motion.div className="w-screen min-h-screen flex flex-col items-center justify-center gap-8 p-6 sm:p-8 bg-gradient-to-b from-[#f6ccde] to-purple-100 text-black relative scroll-x">
@@ -119,8 +129,10 @@ export default function Skills() {
 
         {showSkills && (
           <motion.div
-            className="flex w-max gap-6"
+            className="flex w-max gap-6 "
             animate={{ x: ["0%", "-33.33%"] }}
+            ref={container}
+            // style={{ opacity: scrollDirection }}
             transition={{
               repeat: Infinity,
               repeatType: "loop",
@@ -131,7 +143,9 @@ export default function Skills() {
             {duplicatedSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 min-w-[250px] sm:min-w-[300px] md:min-w-[350px] lg:min-w-[400px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] px-5 py-2 flex justify-center items-center bg-[#f6ccde] text-black text-base rounded-lg shadow-md"
+                className="flex-shrink-0 min-w-[250px] sm:min-w-[300px] md:min-w-[350px] lg:min-w-[400px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] px-5 py-2 flex justify-center items-center bg-[#f6ccde] text-black text-base rounded-lg shadow-lg"
+                ref={target}
+                style={{ opacity: scrollXProgress }}
               >
                 {skill}
               </motion.div>
