@@ -4,8 +4,8 @@ import {
   motion,
   useTransform,
   useMotionValue,
-  useInView,
-  useScroll,
+  // useInView,
+  // useScroll,
 } from "motion/react";
 
 import Image from "next/image";

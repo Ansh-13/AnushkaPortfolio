@@ -5,12 +5,12 @@ import Contact from "@/components/Contact";
 import Skills from "@/components/skills";
 import {
   motion,
-  useScroll,
-  useTransform,
-  useAnimation,
-  useInView,
+  // useScroll,
+  // useTransform,
+  // useAnimation,
+  // useInView,
 } from "framer-motion";
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
 export default function Home() {
   // const { scrollYProgress } = useScroll();

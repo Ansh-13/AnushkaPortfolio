@@ -327,7 +327,7 @@ export default function Projects() {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
+  console.log(dialogOpen);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

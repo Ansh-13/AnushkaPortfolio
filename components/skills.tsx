@@ -1,5 +1,5 @@
 import { motion, useAnimation, useTime, useTransform } from "framer-motion";
-import CursorText from "./cursor";
+// import CursorText from "./cursor";
 import { useState, useEffect, useRef } from "react";
 
 const skills: string[] = [
@@ -39,6 +39,7 @@ export default function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const controls = useAnimation();
+  console.log("width", width);
 
   useEffect(() => {
     const el = containerRef.current;
