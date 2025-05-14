@@ -66,7 +66,7 @@ export default function Skills() {
     container: container,
     target: target,
     axis: "x",
-    offset: ["end start", "end end"],
+    offset: ["end start", "start start"],
   });
 
   return (
@@ -132,7 +132,6 @@ export default function Skills() {
             className="flex w-max gap-6 "
             animate={{ x: ["0%", "-33.33%"] }}
             ref={container}
-            // style={{ opacity: scrollDirection }}
             transition={{
               repeat: Infinity,
               repeatType: "loop",
@@ -143,7 +142,7 @@ export default function Skills() {
             {duplicatedSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 min-w-[250px] sm:min-w-[300px] md:min-w-[350px] lg:min-w-[400px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] px-5 py-2 flex justify-center items-center bg-[#f6ccde] text-black text-base rounded-lg shadow-lg"
+                className="flex-shrink-0 min-w-[250px] sm:min-w-[100px] md:min-w-[350px] lg:min-w-[400px] h-[250px] sm:h-[100px] md:h-[350px] lg:h-[400px] px-5 py-2 flex justify-center items-center bg-[#f6ccde] text-black text-base rounded-lg shadow-lg"
                 ref={target}
                 style={{ opacity: scrollXProgress }}
               >
