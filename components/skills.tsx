@@ -40,7 +40,7 @@ const Skills = () => {
         className="top-5 right-5 w-5/6 h-1/3 z-20 mt-30 flex items-center justify-center gap-4 backdrop-blur-lg bg-white/20 border-b border-white/30 rounded-2xl p-4 shadow-md"
         initial={{ opacity: 0, y: -10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
       >
         <motion.button
           className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] font-semibold"
