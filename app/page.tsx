@@ -12,7 +12,7 @@ import {
   // useAnimation,
   // useInView,
 } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 export default function Home() {
   const ContainerRef = useRef<HTMLDivElement>(null);
