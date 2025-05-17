@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import CursorText from "./cursor";
 
