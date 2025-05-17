@@ -1,6 +1,5 @@
-import { motion, useAnimation, useScroll } from "framer-motion";
-// import CursorText from "./cursor";
-import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const skills: string[] = [
   "HTML",
@@ -17,139 +16,95 @@ const skills: string[] = [
   "Git",
 ];
 
+const certificates: Array<{ name: string; link: string }> = [
+  { name: "Certified JavaScript Developer", link: "#" },
+  { name: "React - The Complete Guide", link: "#" },
+  { name: "Node.js Certification", link: "#" },
+  { name: "MongoDB Developer Certification", link: "#" },
+];
+
 export default function Skills() {
-  const skillsLetters = "Skills".split("");
-  const educationLetters = "Education".split("");
-
-  const [showSkills, setshowSkills] = useState(true);
-  const [showEducation, setshowEducation] = useState(false);
-
-  const duplicatedSkills = [...skills, ...skills, ...skills]; // Duplicate the skills array for seamless scrolling
+  const [showSkills, setShowSkills] = useState(true);
+  const [showCertificates, setShowCertificates] = useState(false);
 
   const handleSkillsClick = () => {
-    setshowSkills(true);
-    setshowEducation(false);
+    setShowSkills(true);
+    setShowCertificates(false);
   };
 
-  const handleEducationClick = () => {
-    setshowSkills(false);
-    setshowEducation(true);
+  const handleCertificatesClick = () => {
+    setShowSkills(false);
+    setShowCertificates(true);
   };
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
-  const controls = useAnimation();
-  console.log("width", width);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (el) {
-      setWidth(el.scrollWidth / 2); // half because we duplicate it
-      controls.start({
-        x: [0, -el.scrollWidth / 2],
-        transition: {
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "linear",
-            duration: 20,
-          },
-        },
-      });
-    }
-  }, [controls]);
-
-  const target = useRef(null);
-  const container = useRef(null);
-
-  const { scrollXProgress } = useScroll({
-    container: container,
-    target: target,
-    axis: "x",
-    offset: ["end start", "start start"],
-  });
-
   return (
-    <motion.div className="w-screen min-h-screen flex flex-col items-center justify-center gap-8 p-6 sm:p-8 bg-gradient-to-b from-[#f6ccde] to-purple-100 text-black relative scroll-x">
-      <motion.div className="flex flex-row items-center justify-center gap-4 sticky top-0 left-0 right-0 z-10">
+    <motion.div className="relative place-items-center w-screen min-h-screen bg-[#f6ccde] text-black">
+      {/* Fixed Buttons at the Top */}
+      <motion.div
+        className="top-5 right-5 w-5/6 h-1/3 z-20 mt-30  flex items-center justify-center gap-4 backdrop-blur-lg bg-white/20 border-b border-white/30 rounded-2xl p-4 shadow-md"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <motion.button
-          className="flex items-center justify-center w-[150px] h-[50px] bg-transparent border-2 border-[#f6ccde] rounded-lg shadow-md"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scaleY: 1.2, scaleX: 1.1 }}
-          onMouseEnter={() => handleSkillsClick()}
+          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] transition-colors duration-300 font-semibold"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleSkillsClick}
         >
-          {skillsLetters.map((letter, index) => (
-            <motion.h2
-              key={index}
-              className="text-3xl md:text-4xl font-bold"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              {letter}
-            </motion.h2>
-          ))}
+          TechStack
         </motion.button>
         <motion.button
-          className="flex items-center justify-center w-[200px] h-[50px] bg-transparent border-2 border-[#f6ccde] rounded-lg shadow-md"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scaleY: 1.2, scaleX: 1.1 }}
-          onMouseEnter={() => handleEducationClick()}
+          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] transition-colors duration-300 font-semibold"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleCertificatesClick}
         >
-          {educationLetters.map((letter, index) => (
-            <motion.h2
-              key={index}
-              className="text-3xl md:text-4xl font-bold"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              {letter}
-            </motion.h2>
-          ))}
+          Certificate
         </motion.button>
       </motion.div>
 
-      <motion.div className="flex w-auto h-auto flex-row items-center justify-center gap-4">
-        {showEducation && (
-          <motion.div className="flex flex-col items-center justify-center gap-4">
-            <motion.h2 className="text-3xl md:text-4xl font-bold">
-              Education
-            </motion.h2>
-            <motion.p className="text-lg md:text-xl">
-              Bachelor of Science in Computer Science
-            </motion.p>
-            <motion.p className="text-lg md:text-xl">
-              University of XYZ, 2020 - 2024
-            </motion.p>
-          </motion.div>
-        )}
-
+      {/* Content Section with Top Padding to Prevent Overlap */}
+      <motion.div className="pt-32 px-4 w-full h-full">
         {showSkills && (
-          <motion.div
-            className="flex w-max gap-6 "
-            animate={{ x: ["0%", "-33.33%"] }}
-            ref={container}
-            transition={{
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "linear",
-              duration: 50,
-            }}
-          >
-            {duplicatedSkills.map((skill, index) => (
+          <motion.div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 max-w-6xl mx-auto h-full">
+            {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 min-w-[250px] sm:min-w-[100px] md:min-w-[350px] lg:min-w-[400px] h-[250px] sm:h-[100px] md:h-[350px] lg:h-[400px] px-5 py-2 flex justify-center items-center bg-[#f6ccde] text-black text-base rounded-lg shadow-lg"
-                ref={target}
-                style={{ opacity: scrollXProgress }}
+                className="text-lg sm:text-xl px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md shadow-md hover:bg-[#ff8ef0] transition-colors duration-300  flex items-center justify-center"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 {skill}
               </motion.div>
             ))}
           </motion.div>
+        )}
+
+        {showCertificates && (
+          <div className="w-full h-[80vh] overflow-y-auto px-4">
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {certificates.map((certificate, index) => (
+                <motion.article
+                  key={index}
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="relative flex flex-col justify-end rounded-xl overflow-hidden shadow-lg bg-white cursor-pointer h-80 hover:bg-[#ff8ef0] transition-colors duration-300"
+                >
+                  <img
+                    src={certificate.link}
+                    alt={certificate.name}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  <h3 className="relative z-10 text-xl font-semibold text-white drop-shadow-md p-4">
+                    {certificate.name}
+                  </h3>
+                </motion.article>
+              ))}
+            </motion.div>
+          </div>
         )}
       </motion.div>
     </motion.div>
