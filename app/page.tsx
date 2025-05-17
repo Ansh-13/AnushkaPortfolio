@@ -15,7 +15,7 @@ import {
 import { useRef } from "react";
 
 export default function Home() {
-  const ContainerRef = useRef<HTMLDivElement>(null);
+  const ContainerRef = useRef(null);
   const HeaderRef = useRef<HTMLDivElement>(null);
   const ContactRef = useRef<HTMLDivElement>(null);
   const ProjectsRef = useRef<HTMLDivElement>(null);

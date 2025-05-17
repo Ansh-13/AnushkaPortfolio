@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import CursorText from "./cursor";
 
-export default function Contact() {
+const Contact = () => {
   const contactUsLetters = "ContactUs".split("");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "0px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.5,
+    margin: "0px 0px -100px 0px",
+  });
 
   const [senderEmail, setSenderEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -56,7 +60,7 @@ export default function Contact() {
         transition={{ duration: 0.8 }}
       >
         <div className="mb-12 text-center">
-          <CursorText letters={contactUsLetters} ref={ref} />
+          <CursorText letters={contactUsLetters} />
           <motion.p
             className="mt-4 text-black text-lg"
             initial={{ opacity: 0 }}
@@ -178,4 +182,5 @@ export default function Contact() {
       </motion.div>
     </div>
   );
-}
+};
+export default Contact;
