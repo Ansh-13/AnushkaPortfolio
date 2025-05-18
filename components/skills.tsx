@@ -46,6 +46,7 @@ const Skills = () => {
           className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] font-semibold"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          style={{ background: showSkills ? "#ff8ef0" : "transparent" }}
           onClick={() => {
             setShowSkills(true);
             setShowCertificates(false);
@@ -57,6 +58,7 @@ const Skills = () => {
           className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] font-semibold"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          style={{ background: showCertificates ? "#ff8ef0" : "transparent" }}
           onClick={() => {
             setShowSkills(false);
             setShowCertificates(true);
