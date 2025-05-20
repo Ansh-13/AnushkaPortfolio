@@ -41,23 +41,23 @@ export default function Home() {
 
   const headerOpacity = useTransform(
     headerScroll.scrollYProgress,
-    [0.5, 0.6],
-    [1, 0.7]
+    [0, 1],
+    [1, 0]
   );
   const projectsOpacity = useTransform(
     projectsScroll.scrollYProgress,
     [1, 0],
-    [1, 0.7]
+    [1, 0]
   );
   const contactOpacity = useTransform(
     contactScroll.scrollYProgress,
     [1, 0],
-    [1, 0.7]
+    [1, 0]
   );
   const skillsOpacity = useTransform(
     skillsScroll.scrollYProgress,
-    [0.5, 0.6],
-    [1, 0.7]
+    [1, 0],
+    [1, 0]
   );
 
   // const headerY = useTransform(headerScroll.scrollYProgress, [0, 1], [0, -50]);

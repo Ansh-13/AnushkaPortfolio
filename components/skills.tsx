@@ -1,26 +1,27 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-const skills: string[] = [
-  "HTML",
-  "CSS",
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Express.js",
-  "MongoDB",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Git",
-];
+const TechStack = {
+  Languages: ["PYTHON", "MATLAB"],
+  Plc: [
+    "Ladder Logic (LD)",
+    "Structured Text (ST)",
+    "Function Block Diagram (FBD)",
+    "Sequential Function Chart (SFC)",
+    "HMI Design",
+  ],
+  AIML: ["PyTorch", "TensorFlow", "Keras", "OpenCV", "scikit-learn"],
+};
 
 const certificates = [
-  { name: "Certified JavaScript Developer", link: "#" },
-  { name: "React - The Complete Guide", link: "#" },
-  { name: "Node.js Certification", link: "#" },
-  { name: "MongoDB Developer Certification", link: "#" },
+  { name: "Data Analysis With Pythons", link: "image.png" },
+  { name: "Accounting Job Simulation", link: "koch.png" },
+  {
+    name: "CorporateFinanceFundamentals",
+    link: "CorporateFinanceFundamentals.png",
+  },
+  { name: "Matlab", link: "Matlab.png" },
+  { name: "freecodecamp-ML", link: "freecodecamp-ML.png" },
 ];
 
 const Skills = () => {
@@ -43,10 +44,10 @@ const Skills = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         <motion.button
-          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] font-semibold"
+          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#f3e8ff] font-semibold"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          style={{ background: showSkills ? "#ff8ef0" : "transparent" }}
+          style={{ background: showSkills ? "#f3e8ff" : "transparent" }}
           onClick={() => {
             setShowSkills(true);
             setShowCertificates(false);
@@ -55,10 +56,12 @@ const Skills = () => {
           TechStack
         </motion.button>
         <motion.button
-          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#ff8ef0] font-semibold"
+          className="text-xl sm:text-2xl flex-1 max-w-[200px] rounded-lg bg-white/10 hover:bg-[#f3e8ff] font-semibold"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          style={{ background: showCertificates ? "#ff8ef0" : "transparent" }}
+          style={{
+            background: showCertificates ? "#f3e8ff" : "transparent",
+          }}
           onClick={() => {
             setShowSkills(false);
             setShowCertificates(true);
@@ -71,16 +74,34 @@ const Skills = () => {
       {/* Content */}
       <motion.div className="pt-32 px-4 w-full h-full">
         {showSkills && (
-          <motion.div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 max-w-6xl mx-auto h-full">
-            {skills.map((skill, index) => (
+          <motion.div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {Object.entries(TechStack).map(([category, items]) => (
               <motion.div
-                key={index}
-                className="text-lg sm:text-xl px-4 py-2 rounded-2xl bg-white/30 backdrop-blur-md shadow-md hover:bg-[#ff8ef0] flex items-center justify-center"
-                initial={{ opacity: 0, y: -10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
+                key={category}
+                className="bg-gradient-to-b from-[#f6ccde] to-purple-100/30 rounded-2xl p-6 shadow-lg backdrop-blur-md border border-white/10"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                {skill}
+                {/* Category Header */}
+                <h3 className="text-black/80 text-2xl font-semibold mb-4 pb-2 border-b border-white/20 tracking-wide">
+                  {category}
+                </h3>
+
+                {/* Skill Items */}
+                <div className="flex flex-wrap gap-3">
+                  {items.map((skill, index) => (
+                    <motion.div
+                      key={skill}
+                      className="text-sm sm:text-base px-4 py-2 rounded-full bg-white/10 text-black shadow hover:bg-purple-100 hover:text-black transition-all duration-300"
+                      initial={{ opacity: 0, y: -10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                    >
+                      {skill}
+                    </motion.div>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -88,20 +109,28 @@ const Skills = () => {
 
         {showCertificates && (
           <div className="w-full h-[80vh] overflow-y-auto px-4">
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
               {certificates.map((certificate, index) => (
                 <motion.article
                   key={index}
                   whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 15,
+                    duration: 0.6,
+                  }}
                   className="relative flex flex-col justify-end rounded-xl overflow-hidden shadow-lg bg-white cursor-pointer h-80 hover:bg-[#ff8ef0]"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  // transition={{ duration: 0.6 }}
                 >
                   <img
                     src={certificate.link}
                     alt={certificate.name}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-fill "
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
                   <h3 className="relative z-10 text-xl font-semibold text-white drop-shadow-md p-4">
                     {certificate.name}
                   </h3>

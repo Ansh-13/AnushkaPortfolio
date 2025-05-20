@@ -79,26 +79,28 @@ export default function Header() {
     yLeft.set(0.5);
   };
 
-  const heading = [
-    "👨‍💻",
-    "S",
-    "O",
-    "F",
-    "T",
-    "W",
-    "A",
-    "R",
-    "E",
-    "_",
-    "E",
-    "N",
-    "G",
-    "I",
-    "N",
-    "E",
-    "E",
-    "R",
-  ];
+  const heading = "Anushka_Chittora".split("");
+
+  // const heading = [
+  //   "👨‍💻",
+  //   "S",
+  //   "O",
+  //   "F",
+  //   "T",
+  //   "W",
+  //   "A",
+  //   "R",
+  //   "E",
+  //   "_",
+  //   "E",
+  //   "N",
+  //   "G",
+  //   "I",
+  //   "N",
+  //   "E",
+  //   "E",
+  //   "R",
+  // ];
 
   // const time = useTime();
   // const rotate = useTransform(time, [0, 2000], [0, 1], { clamp: false });
@@ -173,7 +175,7 @@ export default function Header() {
               {/* Resume Button */}
               <motion.a
                 download
-                href="/Cv.pdf"
+                href="/resume.pdf"
                 initial={{
                   backgroundImage:
                     "linear-gradient(to right, transparent, transparent), linear-gradient(0deg, #ff8ef0, transparent 30%)",
@@ -198,7 +200,7 @@ export default function Header() {
               </motion.a>
               <div className="flex gap-6 mt-4 sm:mt-6 z-20 text-black">
                 <motion.a
-                  href="https://github.com/"
+                  href="https://github.com/anushkachittora"
                   target="_blank"
                   whileHover={{ scale: 1.2, color: "#ff8ef0" }}
                   transition={{ type: "spring", stiffness: 300 }}
@@ -206,7 +208,7 @@ export default function Header() {
                   <Github size={24} className="sm:size-7" />
                 </motion.a>
                 <motion.a
-                  href="https://www.linkedin.com/in/ansh-garg-319602255/"
+                  href="https://www.linkedin.com/in/anushka-chittora/"
                   target="_blank"
                   whileHover={{ scale: 1.2, color: "#ff8ef0" }}
                   transition={{ type: "spring", stiffness: 300 }}
